@@ -1,478 +1,389 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <link rel="icon" type="image/png" href="favicon.png">
-  <title>Salt R Us</title>
-  <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      background:#f2f2f2; 
-      margin:0; padding:0; 
-    }
+<!DOCTYPE html> <html> <head> <link rel="icon" type="image/png" href="favicon.png"> <title>Salt R Us</title> <style> body { font-family: Arial, sans-serif; background:#f2f2f2; margin:0; padding:0; }
 
-    header { 
-      background:#4a89ff; 
-      color:white; 
-      padding:20px; 
-      text-align:center; 
-      font-size:32px; 
-      font-weight:bold;
-    }
+header { 
+  background:#4a89ff; 
+  color:white; 
+  padding:20px; 
+  text-align:center; 
+  font-size:32px; 
+  font-weight:bold;
+}
 
-    .container { 
-      max-width:1000px; 
-      margin:20px auto; 
-      background:white; 
-      padding:20px; 
-      border-radius:10px; 
-      box-shadow:0 0 10px rgba(0,0,0,0.1);
-    }
+.container { 
+  max-width:1000px; 
+  margin:20px auto; 
+  background:white; 
+  padding:20px; 
+  border-radius:10px; 
+  box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
 
-    .money { 
-      font-size:28px; 
-      font-weight:bold; 
-      margin-bottom:5px; 
-      color:#2b2b2b;
-    }
+.money { 
+  font-size:28px; 
+  font-weight:bold; 
+  margin-bottom:5px; 
+  color:#2b2b2b;
+}
 
-    .result {
-      font-size:18px;
-      margin-bottom:15px;
-      height:22px;
-      font-weight:bold;
-      transition:0.3s;
-    }
+.result {
+  font-size:18px;
+  margin-bottom:15px;
+  height:22px;
+  font-weight:bold;
+  transition:0.3s;
+}
 
-    .gain { color:#00aa00; }
-    .loss { color:#cc0000; }
-    .nothing { color:#777; }
+.gain { color:#00aa00; }
+.loss { color:#cc0000; }
+.nothing { color:#777; }
 
-    .flash-blue { color:#008cff !important; }
-    .flash-orange { color:#ff8c00 !important; }
-    .flash-red { color:#cc0000 !important; }
+.flash-blue { color:#008cff !important; }
+.flash-orange { color:#ff8c00 !important; }
+.flash-red { color:#cc0000 !important; }
 
-    .item { 
-      display:flex; 
-      justify-content:space-between; 
-      padding:8px 0; 
-      border-bottom:1px solid #ddd; 
-    }
+.item { 
+  display:flex; 
+  justify-content:space-between; 
+  padding:8px 0; 
+  border-bottom:1px solid #ddd; 
+}
 
-    button { 
-      background:#4a89ff; 
-      color:white; 
-      border:none; 
-      padding:6px 12px; 
-      border-radius:5px; 
-      cursor:pointer; 
-      font-size:14px;
-    }
+button { 
+  background:#4a89ff; 
+  color:white; 
+  border:none; 
+  padding:6px 12px; 
+  border-radius:5px; 
+  cursor:pointer; 
+  font-size:14px;
+}
 
-    button:hover { background:#3a6ed6; }
+button:hover { background:#3a6ed6; }
 
-    .clicker { 
-      background:#ffb300; 
-      margin-bottom:15px; 
-      font-size:16px;
-    }
+.clicker { 
+  background:#ffb300; 
+  margin-bottom:15px; 
+  font-size:16px;
+}
 
-    .clicker:hover { background:#d99800; }
+.clicker:hover { background:#d99800; }
 
-    .section-title {
-      font-size:22px;
-      margin-top:20px;
-      margin-bottom:8px;
-      font-weight:bold;
-    }
+.section-title {
+  font-size:22px;
+  margin-top:20px;
+  margin-bottom:8px;
+  font-weight:bold;
+}
 
-    .inventory-item {
-      padding:4px 0;
-      border-bottom:1px solid #ddd;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
+.inventory-item {
+  padding:4px 0;
+  border-bottom:1px solid #ddd;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 
-    .achievement {
-      background:#e8ffe8;
-      padding:8px;
-      border-radius:5px;
-      margin-bottom:6px;
-      border-left:4px solid #00aa00;
-      font-size:14px;
-    }
+.achievement {
+  background:#e8ffe8;
+  padding:8px;
+  border-radius:5px;
+  margin-bottom:6px;
+  border-left:4px solid #00aa00;
+  font-size:14px;
+}
 
-    .small-btn {
-      padding:4px 8px;
-      font-size:12px;
-    }
-  </style>
-</head>
-<body>
+.small-btn {
+  padding:4px 8px;
+  font-size:12px;
+}
+
+</style> </head> <body>
 
 <header>Salt R Us</header>
 
 <div class="container" id="gameContainer">
 
-  <div class="money" id="money">$0</div>
-  <div class="result" id="resultText"></div>
+<div class="money" id="money">$0</div> <div class="result" id="resultText"></div>
 
-  <button class="clicker" id="mineButton" onclick="mineSalt()">⛏️ Work in the Salt Mines</button>
+<button class="clicker" id="mineButton" onclick="mineSalt()">⛏️ Work in the Salt Mines</button>
 
-  <hr>
+<hr>
 
-  <div class="section-title" id="shopTitle">Salt Shop</div>
-  <div id="items"></div>
+<div class="section-title" id="shopTitle">Salt Shop</div> <div id="items"></div>
 
-  <div class="section-title" id="inventoryTitle">Inventory</div>
-  <div id="inventory"></div>
+<div class="section-title" id="inventoryTitle">Inventory</div> <div id="inventory"></div>
 
-  <button id="mergeButton" onclick="mergeSalts()">🔄 Merge Salts</button>
+<button id="mergeButton" onclick="mergeSalts()">🔄 Merge Salts</button>
 
-  <div class="section-title" id="achievementsTitle">Achievements</div>
-  <div id="achievements"></div>
+<div class="section-title" id="achievementsTitle">Achievements</div> <div id="achievements"></div>
+
+<button onclick="window.open('https://aquatastic.github.io/AquaHub/', '_blank')">AquaHub</button>
 
 </div>
 
-<script>
-  let money = 0;
-  let inventory = {};
-  let unlocked = {};
-  let currentTierUnlocked = 1;
+<script> let money = 0; let inventory = {}; let unlocked = {}; let currentTierUnlocked = 1;
 
-  let saltGain = 1;
-  let sugarLoss = 2;
+let saltGain = 1; let sugarLoss = 2;
 
-  const mergeChain = [
-    "Budget Salt",
-    "Salt That Does Nothing",
-    "Gluten‑Free Salt",
-    "Invisible Salt",
-    "Boneless Salt",
+const mergeChain = [ "Budget Salt", "Salt That Does Nothing", "Gluten‑Free Salt", "Invisible Salt", "Boneless Salt",
 
-    "Salted Salt",
-    "Premium Air‑Salt",
-    "NPC Salt",
-    "Ultra‑Crunchy Salt",
-    "Premium Chef Salt",
+"Salted Salt",
+"Premium Air‑Salt",
+"NPC Salt",
+"Ultra‑Crunchy Salt",
+"Premium Chef Salt",
 
-    "Angel Whisper Salt",
-    "Haunted Cave Salt",
-    "Reverse Salt",
-    "Gamer Salt",
-    "Mystery Rainbow Salt",
+"Angel Whisper Salt",
+"Haunted Cave Salt",
+"Reverse Salt",
+"Gamer Salt",
+"Mystery Rainbow Salt",
 
-    "Spicy Arctic Salt",
-    "Ocean Heart Salt",
-    "Crystal Prism Salt",
-    "Liquid Salt",
-    "Cursed Pirate Salt",
+"Spicy Arctic Salt",
+"Ocean Heart Salt",
+"Crystal Prism Salt",
+"Liquid Salt",
+"Cursed Pirate Salt",
 
-    "Mega Sodium Blast Salt",
-    "Toxic Sludge Salt",
-    "Moon Dust Salt",
-    "Sun‑Forged Salt",
-    "Shadow Realm Salt",
+"Mega Sodium Blast Salt",
+"Toxic Sludge Salt",
+"Moon Dust Salt",
+"Sun‑Forged Salt",
+"Shadow Realm Salt",
 
-    "Mythic Loot Salt",
-    "Anti‑Gravity Salt",
-    "Dragonfire Salt",
-    "Forbidden Black Salt",
-    "Emerald Salt",
+"Mythic Loot Salt",
+"Anti‑Gravity Salt",
+"Dragonfire Salt",
+"Forbidden Black Salt",
+"Emerald Salt",
 
-    "Sapphire Salt",
-    "Ruby Salt",
-    "Diamond‑Infused Salt",
-    "Boss‑Level Salt",
-    "Volcano Core Salt",
+"Sapphire Salt",
+"Ruby Salt",
+"Diamond‑Infused Salt",
+"Boss‑Level Salt",
+"Volcano Core Salt",
 
-    "Salt of Regret",
-    "Salt of Victory",
-    "Eternal Shelf‑Life Salt",
-    "Galactic Nebula Salt",
-    "Salt of Infinite Drip",
+"Salt of Regret",
+"Salt of Victory",
+"Eternal Shelf‑Life Salt",
+"Galactic Nebula Salt",
+"Salt of Infinite Drip",
 
-    "Cosmic Microwave Salt",
-    "Salt of Destiny",
-    "Time‑Travel Salt",
-    "Cosmic Saltstorm",
-    "Quantum Salt",
+"Cosmic Microwave Salt",
+"Salt of Destiny",
+"Time‑Travel Salt",
+"Cosmic Saltstorm",
+"Quantum Salt",
 
-    "Ascended Salt",
-    "Mythic Ascended Salt",
-    "Celestial Ascended Salt",
-    "Omega Ascended Salt",
-    "Final Ascended Salt"
-  ];
+"Ascended Salt",
+"Mythic Ascended Salt",
+"Celestial Ascended Salt",
+"Omega Ascended Salt",
+"Final Ascended Salt"
 
-  const saltCosts = {
-    "Budget Salt": 1,
-    "Salt That Does Nothing": 2,
-    "Gluten‑Free Salt": 5,
-    "Invisible Salt": 10,
-    "Boneless Salt": 12,
+];
 
-    "Salted Salt": 300,
-    "Premium Air‑Salt": 500,
-    "NPC Salt": 1200,
-    "Ultra‑Crunchy Salt": 5000,
-    "Premium Chef Salt": 15000,
+const saltCosts = { "Budget Salt": 1, "Salt That Does Nothing": 2, "Gluten‑Free Salt": 5, "Invisible Salt": 10, "Boneless Salt": 12,
 
-    "Angel Whisper Salt": 20000,
-    "Haunted Cave Salt": 45000,
-    "Reverse Salt": 40000,
-    "Gamer Salt": 42000,
-    "Mystery Rainbow Salt": 50000,
+"Salted Salt": 300,
+"Premium Air‑Salt": 500,
+"NPC Salt": 1200,
+"Ultra‑Crunchy Salt": 5000,
+"Premium Chef Salt": 15000,
 
-    "Spicy Arctic Salt": 75000,
-    "Ocean Heart Salt": 78000,
-    "Crystal Prism Salt": 99000,
-    "Liquid Salt": 90000,
-    "Cursed Pirate Salt": 120000,
+"Angel Whisper Salt": 20000,
+"Haunted Cave Salt": 45000,
+"Reverse Salt": 40000,
+"Gamer Salt": 42000,
+"Mystery Rainbow Salt": 50000,
 
-    "Mega Sodium Blast Salt": 125000,
-    "Toxic Sludge Salt": 123000,
-    "Moon Dust Salt": 150000,
-    "Sun‑Forged Salt": 200000,
-    "Shadow Realm Salt": 222222,
+"Spicy Arctic Salt": 75000,
+"Ocean Heart Salt": 78000,
+"Crystal Prism Salt": 99000,
+"Liquid Salt": 90000,
+"Cursed Pirate Salt": 120000,
 
-    "Mythic Loot Salt": 250000,
-    "Anti‑Gravity Salt": 250000,
-    "Dragonfire Salt": 300000,
-    "Forbidden Black Salt": 300000,
-    "Emerald Salt": 350000,
+"Mega Sodium Blast Salt": 125000,
+"Toxic Sludge Salt": 123000,
+"Moon Dust Salt": 150000,
+"Sun‑Forged Salt": 200000,
+"Shadow Realm Salt": 222222,
 
-    "Sapphire Salt": 360000,
-    "Ruby Salt": 375000,
-    "Diamond‑Infused Salt": 450000,
-    "Boss‑Level Salt": 500000,
-    "Volcano Core Salt": 500000,
+"Mythic Loot Salt": 250000,
+"Anti‑Gravity Salt": 250000,
+"Dragonfire Salt": 300000,
+"Forbidden Black Salt": 300000,
+"Emerald Salt": 350000,
 
-    "Salt of Regret": 131313,
-    "Salt of Victory": 202020,
-    "Eternal Shelf‑Life Salt": 333333,
-    "Galactic Nebula Salt": 850000,
-    "Salt of Infinite Drip": 909090,
+"Sapphire Salt": 360000,
+"Ruby Salt": 375000,
+"Diamond‑Infused Salt": 450000,
+"Boss‑Level Salt": 500000,
+"Volcano Core Salt": 500000,
 
-    "Cosmic Microwave Salt": 888888,
-    "Salt of Destiny": 777777,
-    "Time‑Travel Salt": 999999,
-    "Cosmic Saltstorm": 999999,
-    "Quantum Salt": 1000000,
+"Salt of Regret": 131313,
+"Salt of Victory": 202020,
+"Eternal Shelf‑Life Salt": 333333,
+"Galactic Nebula Salt": 850000,
+"Salt of Infinite Drip": 909090,
 
-    "Ascended Salt": 2000000,
-    "Mythic Ascended Salt": 4000000,
-    "Celestial Ascended Salt": 8000000,
-    "Omega Ascended Salt": 16000000,
-    "Final Ascended Salt": 32000000
-  };
+"Cosmic Microwave Salt": 888888,
+"Salt of Destiny": 777777,
+"Time‑Travel Salt": 999999,
+"Cosmic Saltstorm": 999999,
+"Quantum Salt": 1000000,
 
-  const tierTopSalts = {
-    1: "Boneless Salt",
-    2: "Premium Chef Salt",
-    3: "Mystery Rainbow Salt",
-    4: "Cursed Pirate Salt",
-    5: "Shadow Realm Salt",
-    6: "Emerald Salt",
-    7: "Volcano Core Salt",
-    8: "Salt of Infinite Drip",
-    9: "Quantum Salt"
-  };
+"Ascended Salt": 2000000,
+"Mythic Ascended Salt": 4000000,
+"Celestial Ascended Salt": 8000000,
+"Omega Ascended Salt": 16000000,
+"Final Ascended Salt": 32000000
 
-  function getTier(name) {
-    const index = mergeChain.indexOf(name);
-    return Math.floor(index / 5) + 1;
+};
+
+const tierTopSalts = { 1: "Boneless Salt", 2: "Premium Chef Salt", 3: "Mystery Rainbow Salt", 4: "Cursed Pirate Salt", 5: "Shadow Realm Salt", 6: "Emerald Salt", 7: "Volcano Core Salt", 8: "Salt of Infinite Drip", 9: "Quantum Salt" };
+
+function getTier(name) { const index = mergeChain.indexOf(name); return Math.floor(index / 5) + 1; }
+
+function updateClickerValuesForTier(tier) { let start = (tier - 1) * 5; let end = start + 5;
+
+let cheapest = Infinity;
+
+for (let i = start; i < end; i++) {
+  const name = mergeChain[i];
+  const cost = saltCosts[name];
+  if (cost < cheapest) cheapest = cost;
+}
+
+saltGain = cheapest;
+sugarLoss = saltGain * 2;
+
+}
+
+function getShopItems() { const items = []; for (let i = 0; i < mergeChain.length; i++) { const name = mergeChain[i]; const tier = getTier(name); if (tier <= currentTierUnlocked && tier <= 9) { items.push(name); } } return items; }
+
+function loadItems() { const container = document.getElementById("items"); container.innerHTML = "";
+
+const shopItems = getShopItems();
+shopItems.forEach(name => {
+  const cost = saltCosts[name];
+  const div = document.createElement("div");
+  div.className = "item";
+  div.innerHTML = `
+    <span>${name} — $${cost.toLocaleString()}</span>
+    <button onclick="buy('${name}', ${cost})">Buy</button>
+  `;
+  container.appendChild(div);
+});
+
+}
+
+function buy(name, cost) { if (money >= cost) { money -= cost; updateMoney(); inventory[name] = (inventory[name] || 0) + 1; updateInventory(); checkTierUnlock(name); unlockAchievement("First Purchase"); } }
+
+function checkTierUnlock(name) { const tier = getTier(name); const topSalt = tierTopSalts[tier];
+
+if (topSalt && name === topSalt) {
+  if ((inventory[name] || 0) >= 2) {
+    const newTier = tier + 1;
+    currentTierUnlocked = Math.max(currentTierUnlocked, newTier);
+    updateClickerValuesForTier(newTier);
+    loadItems();
   }
+}
 
-  function updateClickerValuesForTier(tier) {
-    let start = (tier - 1) * 5;
-    let end = start + 5;
+}
 
-    let cheapest = Infinity;
+function updateInventory() { const box = document.getElementById("inventory"); box.innerHTML = "";
 
-    for (let i = start; i < end; i++) {
-      const name = mergeChain[i];
-      const cost = saltCosts[name];
-      if (cost < cheapest) cheapest = cost;
-    }
+Object.keys(inventory).forEach(name => {
+  const qty = inventory[name];
+  const div = document.createElement("div");
+  div.className = "inventory-item";
+  const sellPrice = Math.floor((saltCosts[name] || 0) * 1.5);
+  div.innerHTML = `
+    <span>${name}: ${qty}</span>
+    <span>
+      <button class="small-btn" onclick="sellOne('${name}', ${sellPrice})">
+        Sell 1 ($${sellPrice.toLocaleString()})
+      </button>
+    </span>
+  `;
+  box.appendChild(div);
+});
 
-    saltGain = cheapest;
-    sugarLoss = saltGain * 2;
-  }
+if (Object.keys(inventory).length >= 10) {
+  unlockAchievement("Collector");
+}
 
-  function getShopItems() {
-    const items = [];
-    for (let i = 0; i < mergeChain.length; i++) {
-      const name = mergeChain[i];
-      const tier = getTier(name);
-      if (tier <= currentTierUnlocked && tier <= 9) {
-        items.push(name);
-      }
-    }
-    return items;
-  }
+}
 
-  function loadItems() {
-    const container = document.getElementById("items");
-    container.innerHTML = "";
+function sellOne(name, price) { if ((inventory[name] || 0) > 0) { inventory[name] -= 1; if (inventory[name] <= 0) delete inventory[name]; money += price; updateMoney(); updateInventory(); unlockAchievement("Merchant"); } }
 
-    const shopItems = getShopItems();
-    shopItems.forEach(name => {
-      const cost = saltCosts[name];
-      const div = document.createElement("div");
-      div.className = "item";
-      div.innerHTML = `
-        <span>${name} — $${cost.toLocaleString()}</span>
-        <button onclick="buy('${name}', ${cost})">Buy</button>
-      `;
-      container.appendChild(div);
-    });
-  }
+function mergeSalts() { let mergedSomething = false;
 
-  function buy(name, cost) {
-    if (money >= cost) {
-      money -= cost;
-      updateMoney();
-      inventory[name] = (inventory[name] || 0) + 1;
-      updateInventory();
-      checkTierUnlock(name);
-      unlockAchievement("First Purchase");
-    }
-  }
+for (let i = 0; i < mergeChain.length - 1; i++) {
+  const base = mergeChain[i];
+  const next = mergeChain[i + 1];
 
-  function checkTierUnlock(name) {
-    const tier = getTier(name);
+  if ((inventory[base] || 0) >= 2) {
+    inventory[base] -= 2;
+    if (inventory[base] <= 0) delete inventory[base];
+    inventory[next] = (inventory[next] || 0) + 1;
+    mergedSomething = true;
+
+    const tier = getTier(base);
     const topSalt = tierTopSalts[tier];
-
-    if (topSalt && name === topSalt) {
-      if ((inventory[name] || 0) >= 2) {
-        const newTier = tier + 1;
-        currentTierUnlocked = Math.max(currentTierUnlocked, newTier);
-        updateClickerValuesForTier(newTier);
-        loadItems();
-      }
+    if (topSalt && base === topSalt) {
+      const newTier = tier + 1;
+      currentTierUnlocked = Math.max(currentTierUnlocked, newTier);
+      updateClickerValuesForTier(newTier);
     }
   }
+}
 
-  function updateInventory() {
-    const box = document.getElementById("inventory");
-    box.innerHTML = "";
-
-    Object.keys(inventory).forEach(name => {
-      const qty = inventory[name];
-      const div = document.createElement("div");
-      div.className = "inventory-item";
-      const sellPrice = Math.floor((saltCosts[name] || 0) * 1.5);
-      div.innerHTML = `
-        <span>${name}: ${qty}</span>
-        <span>
-          <button class="small-btn" onclick="sellOne('${name}', ${sellPrice})">
-            Sell 1 ($${sellPrice.toLocaleString()})
-          </button>
-        </span>
-      `;
-      box.appendChild(div);
-    });
-
-    if (Object.keys(inventory).length >= 10) {
-      unlockAchievement("Collector");
-    }
-  }
-
-  function sellOne(name, price) {
-    if ((inventory[name] || 0) > 0) {
-      inventory[name] -= 1;
-      if (inventory[name] <= 0) delete inventory[name];
-      money += price;
-      updateMoney();
-      updateInventory();
-      unlockAchievement("Merchant");
-    }
-  }
-
-  function mergeSalts() {
-    let mergedSomething = false;
-
-    for (let i = 0; i < mergeChain.length - 1; i++) {
-      const base = mergeChain[i];
-      const next = mergeChain[i + 1];
-
-      if ((inventory[base] || 0) >= 2) {
-        inventory[base] -= 2;
-        if (inventory[base] <= 0) delete inventory[base];
-        inventory[next] = (inventory[next] || 0) + 1;
-        mergedSomething = true;
-
-        const tier = getTier(base);
-        const topSalt = tierTopSalts[tier];
-        if (topSalt && base === topSalt) {
-          const newTier = tier + 1;
-          currentTierUnlocked = Math.max(currentTierUnlocked, newTier);
-          updateClickerValuesForTier(newTier);
-        }
-      }
-    }
-
-    if (mergedSomething) {
-      updateInventory();
-      loadItems();
-      unlockAchievement("First Merge");
-    }
-  }
-
-  function mineSalt() {
-    let chance = Math.random();
-    const result = document.getElementById("resultText");
-
-    if (chance < 0.10) {
-      let loss = sugarLoss;
-      if (money < loss) loss = money;
-      money -= loss;
-      updateMoney();
-      result.textContent = `You found sugar! -${loss}`;
-      result.className = "result flash-orange";
-      setTimeout(() => result.className = "result loss", 300);
-    } 
-    else if (chance < 0.55) {
-      money += saltGain;
-      updateMoney();
-      result.textContent = `You found salt! +${saltGain}`;
-      result.className = "result flash-blue";
-      setTimeout(() => result.className = "result gain", 300);
-    } 
-    else {
-      result.textContent = "You found nothing! +0";
-      result.className = "result flash-red";
-      setTimeout(() => result.className = "result nothing", 300);
-    }
-
-    if (money >= 10) unlockAchievement("Salt Starter");
-    if (money >= 100) unlockAchievement("Salt Tycoon");
-  }
-
-  function updateMoney() {
-    document.getElementById("money").innerText = "$" + money.toLocaleString();
-  }
-
-  function unlockAchievement(name) {
-    if (unlocked[name]) return;
-    unlocked[name] = true;
-    renderAchievements();
-  }
-
-  function renderAchievements() {
-    const box = document.getElementById("achievements");
-    box.innerHTML = "";
-    Object.keys(unlocked).forEach(name => {
-      const div = document.createElement("div");
-      div.className = "achievement";
-      div.textContent = "🏆 " + name;
-      box.appendChild(div);
-    });
-  }
-
+if (mergedSomething) {
+  updateInventory();
   loadItems();
-</script>
+  unlockAchievement("First Merge");
+}
 
-</body>
-</html>
+}
+
+function mineSalt() { let chance = Math.random(); const result = document.getElementById("resultText");
+
+if (chance < 0.10) {
+  let loss = sugarLoss;
+  if (money < loss) loss = money;
+  money -= loss;
+  updateMoney();
+  result.textContent = `You found sugar! -${loss}`;
+  result.className = "result flash-orange";
+  setTimeout(() => result.className = "result loss", 300);
+} 
+else if (chance < 0.55) {
+  money += saltGain;
+  updateMoney();
+  result.textContent = `You found salt! +${saltGain}`;
+  result.className = "result flash-blue";
+  setTimeout(() => result.className = "result gain", 300);
+} 
+else {
+  result.textContent = "You found nothing! +0";
+  result.className = "result flash-red";
+  setTimeout(() => result.className = "result nothing", 300);
+}
+
+if (money >= 10) unlockAchievement("Salt Starter");
+if (money >= 100) unlockAchievement("Salt Tycoon");
+
+}
+
+function updateMoney() { document.getElementById("money").innerText = "$" + money.toLocaleString(); }
+
+function unlockAchievement(name) { if (unlocked[name]) return; unlocked[name] = true; renderAchievements(); }
+
+function renderAchievements() { const box = document.getElementById("achievements"); box.innerHTML = ""; Object.keys(unlocked).forEach(name => { const div = document.createElement("div"); div.className = "achievement"; div.textContent = "🏆 " + name; box.appendChild(div); }); }
+
+loadItems(); </script>
+
+</body> </html>
